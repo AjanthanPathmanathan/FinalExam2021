@@ -1,0 +1,70 @@
+#include <ESP32Servo.h>
+Servo myservo;
+
+int ledGreen = 15;
+int ledRed = 2;
+int servoVert = 23;
+int servoHori = 22;
+int pot1 = 12;
+int pot2 = 13;
+int D1 = 27;
+int D2 = 26;
+int D3 = 25;
+int D4 = 4;
+int switch = 5;
+int calibration1 = 0;
+int calibration2 = 0;
+int room = 0;
+unsigned long Ctime = 0;
+
+void setup() {
+  pinMode(D1, INPUT_PULLUP);
+  pinMode(D2, INPUT_PULLUP);
+  pinMode(D3, INPUT_PULLUP);
+  pinMode(D4, INPUT_PULLUP);
+  pinMode(switch, INPUT_PULLUP);
+  pinMode(pot1, INPUT_PULLUP);
+  pinMode(pot2, INPUT_PULLUP);
+
+  room = ((digitalRead(D1) + digitalRead(D2) + digitalRead(D3) + digitalRead(D4)) / 4);
+  
+ }
+ 
+ void loop() {
+  if (digitalRead(switch) == HIGH) {
+    calibration1 = digitalRead(pot1);
+    calibration2 = digitalRead(pot2);
+    
+    if ((room - (digitalRead(D1) && digitalRead(D2) && digitalRead(D3) && digitalRead(D4)) == 0) {
+      digitalWrite(ledGreen, HIGH);
+    }
+    
+    if (((digitalRead(D2) - room) > (digitalRead(D1) && digitalRead(D3) && digitalRead(D4))) {
+      myservo.write(servo1, digitalRead(D1));
+      if (millis() - Ctime == 5000)
+      {
+        Ctime = millis();
+        digitalWrite(ledRed, HIGH);
+      }
+    };
+      
+    if (((digitalRead(D3) - room) > (digitalRead(D2) && digitalRead(D1) && digitalRead(D4))) {
+      myservo.write(servo1, digitalRead(D1));
+      if (millis() - Ctime == 5000)
+      {
+        Ctime = millis();
+        digitalWrite(ledRed, HIGH);
+      }
+    };
+    
+    if (((digitalRead(D4) - room) > (digitalRead(D2) && digitalRead(D3) && digitalRead(D1))) {
+      myservo.write(servo1, digitalRead(D1));
+      if (millis() - Ctime == 5000)
+      {
+        Ctime = millis();
+        digitalWrite(ledRed, HIGH);
+      }
+    };
+    
+    
+      
